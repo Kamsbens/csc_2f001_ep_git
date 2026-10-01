@@ -4,32 +4,17 @@ int sort_get_index(float tab[], int top, float val);
 void sort_insert_at(float tab[],int i,int top,float val);
 void sort_insert(float tab[], int top, float val);
 
-
+int nb_columns();
+int nb_lines();
+void grid_init(char grid[], char pixel);
+void grid_display(char grid[]);
 
 int main(void){
-    float tab[5] = {1,3,5,7,0};
-    for(int i =0;i<5;i++){
-        printf("%f  ",tab[i]);
-    };
-    /*
-    //TESTS 
-    float new_nb = 2; 
-    int new_pos = sort_get_index(tab,4,new_nb);
-    printf("\nInsert %f at %i \n",new_nb,new_pos);
-    sort_insert_at(tab,new_pos,4,new_nb);
+    char grid[nb_columns()*nb_lines()];
+    grid_init(grid,'*');
+    grid_display(grid);
 
-    for(int i =0;i<5;i++){
-        printf("%f  ",tab[i]);
-    }
-    */
-    printf("\n\n");
-
-    sort_insert(tab,4,2);
-    for(int i =0;i<5;i++){
-        printf("%f  ",tab[i]);
-    };
 }
-
 
 int sort_get_index(float tab[],int top,float val){
     //returns the potential position of val in the sorted array tab
@@ -54,4 +39,27 @@ void sort_insert(float tab[], int top, float val){
     int new_index = sort_get_index( tab, top, val);
     sort_insert_at(tab,new_index, top, val);
 };
+
+// SECOND PART 
+int nb_columns(){
+    return 32;
+}
+int nb_lines(){
+    return 16;
+}
+
+void grid_init(char grid[], char pixel){
+    int total_space = nb_columns()*nb_lines();
+    for(int i=0;i<total_space;i++){
+        grid[i] = pixel;
+    }
+}
+
+void grid_display(char grid[]){
+    for(int k=0;k<nb_columns()*nb_lines();k+=nb_columns()){
+        for(int i=k;i<nb_columns()+k;i++)
+            printf("%c",grid[i]);
+        printf("\n");
+    }
+}
 
