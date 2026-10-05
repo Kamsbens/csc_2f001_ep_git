@@ -191,7 +191,6 @@ void sierpinski(char grid[],struct point p1, struct point p2, struct point p3,in
         struct point p1mid = line_middle(p1,p2);
         struct point p2mid = line_middle(p2,p3);
         struct point p3mid = line_middle(p1,p3);
-        plot_triangle(grid,p1mid,p2mid,p3mid,' ');
 
         struct point triangle1[3] = {p1, p1mid, p3mid};
         struct point triangle2[3] = {p1mid, p2, p2mid};
