@@ -1,19 +1,23 @@
-.SUFFIXES:         # remove all the implicit rules (avoid conflicts with our own rules)
-.SECONDARY:        # all files are intermediate (keep them, otherwise they are removed)
-.PHONY: all clean  # these targets are not files (even if a file named "all" or "clean" exists, the rule is applied)
+.SUFFIXES:
+.SECONDARY:
+.PHONY: all clean
 
-LDFLAGS=
-LIBS=
-CFLAGS=-Wall -Werror -g
-BIN=army-pokemon
+CC = gcc
+CFLAGS = -Wall -Werror -g
+LDFLAGS =
+LIBS =
 
-all: $(BIN)
+all: army-pokemon army-zombie
 
-army-pokemon: main.o 
-	gcc $(LDFLAGS) -o $@ $^ $(LIBS)
+army-%: main.o monster.o army-%.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
-%.o: %.c 
-	gcc $(CFLAGS) -o $@ -c $<
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Recompiler si un des headers utilises a change.
+main.o monster.o army-pokemon.o army-zombie.o: monster.h macro.h
+main.o army-pokemon.o army-zombie.o: army.h
 
 clean:
-	rm -f $(BIN) *.o *~ 
+	rm -f *.o army-pokemon army-zombie
